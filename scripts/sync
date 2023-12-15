@@ -1,0 +1,27 @@
+#!/bin/sh
+if [ "$#" = '0' ]; then
+	DEST=backup/main
+	rsync -avzhe ssh --progress --delete $HOME/dev     blackbox:$DEST
+	rsync -avzhe ssh --progress --delete $HOME/dl      blackbox:$DEST
+	rsync -avzhe ssh --progress --delete $HOME/doc     blackbox:$DEST
+	rsync -avzhe ssh --progress --delete $HOME/media   blackbox:$DEST
+	rsync -avzhe ssh --progress --delete $HOME/.gnupg  blackbox:$DEST/gpg
+	rsync -avzhe ssh --progress --delete $HOME/.ssh    blackbox:$DEST/ssh
+	rsync -avzhe ssh --progress --delete $HOME/.bogoya blackbox:$DEST
+
+elif [ $1 = 'supernets' ]; then
+	DEST=backup/supernets
+
+	SUPERBOX=changeme
+	BOTBOX=changeme
+	GITBOX=changeme
+
+	ssh $GITBOX   'tar -zcvf ~/gitea.tar.gz /var/gitea' && scp -O3 flamingo:gitea.tar.gz blackbox:$DEST
+	ssh $SUPERBOX 'tar -zcvf ~/supernets.tar.gz ~/services ~/unrealircd ~/www /etc/nginx/nginx.conf' && scp -O3 supernets:supernets.tar.gz blackbox:$DEST
+	ssh $BOTBOX   'tar -zcvf ~/bots.tar.gz ~/bots' && scp -O3 wildwest:bots.tar.gz blackbox:$DEST
+fi
+
+elif [ $1 = 'acid' ]; then
+	DEST=backup/enterthevoid
+	ssh condore  'tar -zcvf ~/blackhole.tar.gz ~/data/scans/blackcore-routing/config/sirp/assets/i_like_you.jpg' && scp -O3 condore:enterthevoid.tar.gz warchest:$DEST
+fi

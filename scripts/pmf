@@ -1,0 +1,57 @@
+#!/bin/sh
+# poor mans firewall - developed by fractal (https://github.com/strangeprogram/voidconf)
+# dependencies: ufw
+
+# Configuration
+IRCD_HUB_PORT='7000'
+IRCD_HUB_ALLOW='5.6.7.8'
+RELAY_PORT='3000'
+RELAY_ALLOW='1.0.1.0'
+SSH_PORT='22'
+SSH_ALLOW='1.2.3.4'
+
+kernel_protection() {
+    {
+        net.ipv4.tcp_syncookies=1
+        net.ipv4.conf.all.rp_filter=1
+        net.ipv4.tcp_synack_retries=2
+        net.ipv4.tcp_abort_on_overflow=1
+        net.ipv4.tcp_max_orphans=4096
+        net.ipv4.tcp_timestamps=0
+        net.ipv4.tcp_fin_timeout=30
+        net.ipv6.conf.all.disable_ipv6=1
+        net.ipv6.conf.default.disable_ipv6=1
+        net.ipv6.conf.lo.disable_ipv6=1
+    } > /etc/sysctl.d/99-pmf.conf
+    sysctl -p /etc/sysctl.d/99-pmf.conf
+}
+
+disable_ufw_icmp_replies() {
+    sed -i '/-A ufw-before-\(input\|forward\) -p icmp --icmp-type \(destination-unreachable\|time-exceeded\|parameter-problem\|echo-request\)/s/^/# /' /etc/ufw/before.rules
+}
+
+set_ufw_rules() {
+    ufw default deny incoming
+    ufw default allow outgoing
+    ufw allow from $SSH_ALLOW to any port $SSH_PORT proto tcp
+
+    ufw allow 80/tcp
+    ufw allow 443/tcp
+
+    ufw allow 6660:6669/tcp
+    ufw allow 7000/tcp
+    ufw allow 6697/tcp
+    ufw allow 9999/tcp
+    ufw allow from $IRCD_HUB_ALLOW to any port $IRCD_HUB_PORT proto tcp
+    ufw allow from $RELAY_ALLOW to any port $RELAY_PORT proto tcp
+}
+
+start_ufw() {
+    ufw enable && systemctl enable ufw
+    ufw status verbose
+}
+
+kernel_protection
+disable_ufw_icmp_replies
+set_ufw_rules
+start_ufw
