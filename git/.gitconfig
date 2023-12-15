@@ -16,6 +16,6 @@
 [user]
 	signingkey = 441EB0F297E0DCF0AEF2F711EF4B922DB85DC9DE
 	name = fractal
-	email = acid.vegas@acid.vegas
+	email = wlan@iproute.host
 [pull]
 	ff = only
