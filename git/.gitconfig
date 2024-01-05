@@ -14,8 +14,8 @@
 [core]
 	editor = nano
 [user]
-	signingkey = 441EB0F297E0DCF0AEF2F711EF4B922DB85DC9DE
-	name = fractal
-	email = wlan@iproute.host
+	signingkey = 0C8E8E752A40A8B350BD02E3373612B73AF7ABB2
+	name = strangeprogram
+	email = hive.mind@reflection.theory
 [pull]
 	ff = only

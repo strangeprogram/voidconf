@@ -1,0 +1,11 @@
+#!/bin/sh
+
+if [ -z $1 ]; then
+   echo "Usage: $0 <class of scratchpad window>"
+   exit 1
+fi
+
+PIDS=$(xdotool search --class "$1")
+for pid in $PIDS; do
+    bspc node $pid --flag hidden -f
+done

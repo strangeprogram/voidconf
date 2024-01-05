@@ -1,5 +1,5 @@
 #!/bin/bash
-# enter the void - developed by fractal (https://github.com/strangeprogram/voidconf)
+# enter the void - developed by acidvegas
 
 set -xev
 

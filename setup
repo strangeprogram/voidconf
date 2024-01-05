@@ -1,5 +1,5 @@
 #!/bin/sh
-# void setup script - developed by fractal (https://github.com/strangeprogram/voidconf)
+# void setup script - developed by acidvegas
 
 # note: After importing keys: printf "FINGERPRINTHERE:6:" | gpg --import-ownertrust
 
@@ -13,7 +13,7 @@ GFX_DRIVER=intel # amd or intel (leave blank for none)
 REMOTE_ACCESS=dropbear # ssh or dropbear
 REMOTE_PORT=2023 # CHANGE THIS
 
-GIT_URL="https://raw.githubusercontent.com/fractal/voidconf/master"
+GIT_URL="https://raw.githubusercontent.com/strangeprogram/voidconf/master"
 
 setup_root() {
 	xbps-install -Su && xbps-install void-repo-nonfree && xbps-install -Su

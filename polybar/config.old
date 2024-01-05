@@ -1,0 +1,301 @@
+[settings]
+throttle-ms = 50
+throttle-limit = 5
+
+[bar/top]
+wm-restack = bspwm
+
+monitor= ${env:MONITOR:}
+width = 100%
+height = 17
+
+background = #222222
+foreground = #c2c2b0
+red = #CC6666
+yellow = #F0C674
+green = #B3BB67
+blue = #7FA0BC
+
+line-size = 2
+
+spacing = 1
+padding-left = 2
+padding-right = 2
+module-margin-left = 0
+module-margin-right = 2
+
+font-0 = FontAwesome:size=10.5;1
+font-1 = siji:size=8
+font-2 = scientifica:size=9
+font-3 = tewi:size=9
+font-4 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-5 = Overpass:size=8
+
+modules-left = bspwm
+modules-center = mpd
+modules-right = vpn wifi volume pulseaudio clock power
+
+[module/xwindow]
+type = internal/xwindow
+label-font = 3
+label-empty = "It would be best if you could remember that on your own, Colonel."
+label-empty-font = 3
+label-maxlen = 80
+
+[module/mpd]
+type = internal/mpd
+host = 127.0.0.1
+port = 6600
+
+format-online = <label-time> <toggle> <label-song>
+format-offline = <label-offline>
+
+label-time-font = 3
+label-time-foreground = #87875f
+label-song = %artist% - %title%
+label-song-font = 3
+label-offline = mpd is offline
+label-offline-font = 3
+
+icon-play = 
+icon-pause = 
+
+[module/bspwm]
+type = internal/bspwm
+
+label-focused = %name%
+label-focused-padding = 2
+label-focused-font = 3
+label-focused-underline = #87875f
+
+label-occupied = %name%
+label-occupied-padding = 2
+label-occupied-font = 3
+
+label-dimmed = %name%
+label-dimmed-padding = 2
+label-dimmed-underline = #c2c2b0
+label-dimmed-font = 3
+
+label-urgent = %name%
+label-urgent-padding = 2
+label-urgent-underline = #aa4450
+label-urgent-font = 3
+
+label-empty = %name%
+label-empty-font = 3
+label-empty-padding = 2
+label-empty-foreground = #87875f
+
+[module/vpn]
+type = custom/script
+exec = "echo "
+exec-if = vpn status
+interval = 5
+
+label-padding = 2
+label-font = 1
+label-underline = #aa4450
+
+[module/wifi]
+type = internal/network
+interface = wlp3s0
+
+format-connected = <ramp-signal> <label-connected>
+format-disconnected = <label-disconnected>
+format-packetloss = <label-connected>
+format-connected-underline = #aa4450
+format-disconnected-underline = #aa4450
+format-packetloss-underline = #aa4450
+format-connected-padding = 2
+format-disconnected-padding = 2
+format-packetloss-padding = 2
+
+label-connected = %{A1:connman-gtk --no-icon:}%essid%%{A}
+label-connected-font = 3
+
+label-disconnected = %{A1:connman-gtk --no-icon:}disconnected%{A}
+label-disconnected-font = 3
+
+ramp-signal-0 = !
+ramp-signal-1 = 
+ramp-signal-2 = 
+ramp-signal-3 = 
+ramp-signal-4 = 
+ramp-signal-5 = 
+
+[module/battery1]
+type = internal/battery
+battery = BAT0
+full-at = 98
+adapter = AC
+
+format-charging =  <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = 
+format-padding = 2
+
+format-charging-underline = #ff9800
+format-charging-padding = 2
+format-discharging-underline = #ff9800
+format-discharging-padding = 2
+format-full-underline = #ff9800
+format-full-padding = 2
+
+label-charging = %percentage%%
+label-charging-font = 3
+label-discharging = %percentage%%
+label-discharging-font = 3
+
+ramp-capacity-0 = 
+ramp-capacity-0-font = 1
+ramp-capacity-1 = 
+ramp-capacity-1-font = 1
+ramp-capacity-2 = 
+ramp-capacity-2-font = 1
+ramp-capacity-3 = 
+ramp-capacity-3-font = 1
+ramp-capacity-4 = 
+ramp-capacity-4-font = 1
+
+poll-interval = 5
+
+[module/battery2]
+type = internal/battery
+battery = BAT1
+full-at = 97
+adapter = AC
+
+format-charging =  <label-charging>
+format-discharging = <ramp-capacity> <label-discharging>
+format-full = 
+format-padding = 2
+
+format-charging-underline = #ff9800
+format-charging-padding = 2
+format-discharging-underline = #ff9800
+format-discharging-padding = 2
+format-full-underline = #ff9800
+format-full-padding = 2
+
+label-charging = %percentage%%
+label-charging-font = 3
+label-discharging = %percentage%%
+label-discharging-font = 3
+
+ramp-capacity-0 = 
+ramp-capacity-0-font = 1
+ramp-capacity-1 = 
+ramp-capacity-1-font = 1
+ramp-capacity-2 = 
+ramp-capacity-2-font = 1
+ramp-capacity-3 = 
+ramp-capacity-3-font = 1
+ramp-capacity-4 = 
+ramp-capacity-4-font = 1
+
+poll-interval = 5
+
+[module/memory]
+type = internal/memory
+
+format = <label> <bar-used>
+format-padding = 2
+format-underline = #719611
+
+label = 
+label-font = 3
+
+bar-used-width = 10
+bar-used-indicator = |
+bar-used-indicator-font = 4
+bar-used-indicator-foreground = #b1d631
+bar-used-fill = ─
+bar-used-fill-font = 4
+bar-used-fill-foreground = #b1d631
+bar-used-empty = ─
+bar-used-empty-font = 4
+bar-used-empty-foreground = #c2c2b0
+
+[module/pulseaudio]
+type = internal/pulseaudio
+
+format-volume = <label-volume> <bar-volume>
+label-volume = VOL %percentage%%
+label-volume-foreground = ${root.foreground}
+
+label-muted = 🔇 muted
+label-muted-foreground = #666
+
+bar-volume-width = 10
+bar-volume-foreground-0 = #55aa55
+bar-volume-foreground-1 = #55aa55
+bar-volume-foreground-2 = #55aa55
+bar-volume-foreground-3 = #55aa55
+bar-volume-foreground-4 = #55aa55
+bar-volume-foreground-5 = #f5a70a
+bar-volume-foreground-6 = #ff5555
+bar-volume-gradient = false
+bar-volume-indicator = |
+bar-volume-indicator-font = 2
+bar-volume-fill = ─
+bar-volume-fill-font = 2
+bar-volume-empty = ─
+bar-volume-empty-font = 2
+bar-volume-empty-foreground = ${colors.foreground-alt}
+
+[module/clock]
+type = internal/date
+date = %%{T3}%Y-%m-%d %I:%M%%{T-}
+
+format =  <label>
+format-padding = 2
+format-underline = #6688aa
+
+[module/powermenu]
+type = custom/menu
+format-spacing = 1
+label-open = 
+label-open-font = 2
+label-open-foreground = ${colors.red}
+label-close = 
+label-close-foreground = ${colors.foreground}
+label-separator = |
+label-separator-foreground = ${colors.foreground-alt}
+menu-0-0 = 
+menu-0-0-foreground = ${colors.blue}
+menu-0-0-exec = menu-open-1
+menu-0-1 = 
+menu-0-1-foreground = ${colors.red}
+menu-0-1-exec = menu-open-2
+menu-1-0 = redémarrer?
+menu-1-0-exec = /sbin/reboot
+menu-1-1 = 
+menu-1-1-exec = menu-open-0
+menu-2-0 = 
+menu-2-0-exec = menu-open-0
+menu-2-1 = éteindre?
+menu-2-1-exec = /sbin/poweroff
+
+[module/power]
+type = custom/menu
+expand-right = true
+
+format = <menu> <label-toggle>
+format-padding = 2
+format-underline = #8f6f8f
+
+menu-0-0 = 
+menu-0-0-exec = loginctl poweroff &
+menu-0-0-padding = 2
+menu-0-1 = 
+menu-0-1-exec = loginctl reboot &
+menu-0-1-padding = 2
+menu-0-2 = 
+menu-0-2-exec = loginctl suspend &
+menu-0-2-padding = 2
+
+label-open = 
+label-close = 
+
+; vim:ft=dosini

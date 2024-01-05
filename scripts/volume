@@ -1,0 +1,34 @@
+#!/bin/sh
+
+get_volume() {
+    amixer sget Master | awk -F"[][]" '/dB/ { print $2 }' | sed 's/%//'
+}
+
+send_notification() {
+    volume=$(get_volume | awk '{print int($1 / 1.9)}')
+    # Make the bar with the special character ─ (it's not dash -)
+    # https://en.wikipedia.org/wiki/Box-drawing_character
+    bar=$(seq -s "─" "$volume" | sed 's/[0-9]//g')
+    # Send the notification
+    /home/blowfish/.local/bin/notify-alt -t 1000 --replace-file=/tmp/vol-notif "vol:$bar"
+}
+
+case $1 in
+    up)
+    # Set the volume on (if it was muted)
+    amixer -q sset Master unmute
+    # Up the volume (+ 5%)
+    amixer -q sset Master 5%+
+    send_notification
+    ;;
+    down)
+    amixer -q sset Master unmute
+    amixer -q sset Master 5%-
+    send_notification
+    ;;
+    mute)
+    # Toggle mute
+    amixer -q sset Master toggle
+    /home/blowfish/.local/bin/notify-alt -t 1000 --replace-file=/tmp/vol-notif "mute toggled"
+    ;;
+esac

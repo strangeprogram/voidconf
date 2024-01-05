@@ -1,5 +1,5 @@
 #!/bin/bash
-# enter the zoid (zfs on root with raidz) - developed by fractal (https://github.com/strangeprogram/voidconf)
+# enter the zoid (zfs on root with raidz) - developed by acidvegas
 # reference: https://docs.zfsbootmenu.org/en/v2.2.x/guides/void-linux/uefi.html
 
 set -xev
